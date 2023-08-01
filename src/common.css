@@ -1,0 +1,43 @@
+.search-form {
+    height: 50px;
+    margin-bottom: 20px;
+    background-color: #baf1dab4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
+}
+
+input {
+    height: 20px;
+    width: 300px;
+    border-radius: 4px;
+    border: 1px solid rgb(143, 138, 138);
+    padding-left: 10px;
+}
+
+button {
+    height: 25px;
+    width: 80px;
+    border-radius: 4px;
+    border: 1px solid rgb(143, 138, 138);
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.info {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
