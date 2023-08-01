@@ -21,6 +21,18 @@ async function getImageCollection() {
 function renderImageCollection() {
   getImageCollection().then(response => {
     const data = response.data;
+    if (data.total === 0 || !enterValue) {
+      Notify.warning('По вашому запиту нічого не знайдено!',
+        {
+          timeout: 3000,
+          position: "center-center",
+          width: '400px',
+          fontSize: '18px'
+        });
+      pageInput.value = '';
+      return
+    }
+
     data.hits.map(card => {
       const url = card.webformatURL;
       const image = `<div class="photo-card">
@@ -47,12 +59,7 @@ function renderImageCollection() {
 
 
 pageform.addEventListener('submit', (event) => {
-  if (!enterValue) {
-    alert('А що саме ви хочете побачити?')
-  //  Report.failure('А що саме ви хочете побачити?');
-    return
-  } 
-
+  
     event.preventDefault(); 
     imageBox.innerHTML = ''; 
     renderImageCollection(); 
