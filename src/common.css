@@ -62,11 +62,19 @@ input {
     background-color: rgb(146, 191, 228);
     color: aliceblue;
     border: none;
-    
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .is-hidden {
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
+}
+
+.photo-card {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.photo-card:hover {
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4), 0 28px 30px rgba(0, 0, 0, 0.3);
 }

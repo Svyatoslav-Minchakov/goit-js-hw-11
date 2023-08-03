@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
@@ -14,6 +13,8 @@ const pageform = document.querySelector('.search-form');
 const pageInput = document.querySelector('input');
 const btnShowMore = document.querySelector('.show-more');
 
+btnShowMore.addEventListener('click', renderNextPage);
+imageBox.addEventListener('click', openImage);
 pageInput.addEventListener('input', (event) => {
   enterValue = event.target.value;
 });
@@ -37,7 +38,7 @@ function renderImageCollection() {
       pageInput.value = '';
       return
     }
-    console.log(data)
+
     Notify.success(`Знайдено ${data.totalHits} зображень`,
         {
           timeout: 5000,
@@ -82,7 +83,6 @@ function renderImageCollection() {
   });
 }
 
-
 pageform.addEventListener('submit', (event) => {
   
     event.preventDefault(); 
@@ -90,8 +90,6 @@ pageform.addEventListener('submit', (event) => {
     renderImageCollection(); 
   
 });
-
-btnShowMore.addEventListener('click', renderNextPage);
 
 function renderNextPage() {
   pageNumber += 1;
@@ -128,12 +126,6 @@ function renderNextPage() {
     lightbox.refresh();
   });
 }
-
-imageBox.addEventListener('click', openImage);
-
-
-
-
 
 function openImage(event) {
   event.preventDefault();
