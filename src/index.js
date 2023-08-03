@@ -1,11 +1,14 @@
 import axios from "axios";
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 const API_KEY = '35528535-2026f3bafef7be5a50534f79c';
 const BASE_URL = 'https://pixabay.com/api/';
 let enterValue = '';
 let pageNumber = 1;
+let lightbox;
 const imageBox = document.querySelector('.gallery');
 const pageform = document.querySelector('.search-form');
 const pageInput = document.querySelector('input');
@@ -46,7 +49,9 @@ function renderImageCollection() {
     data.hits.map(card => {
       const url = card.webformatURL;
       const image = `<div class="photo-card">
-        <img width="350" height="233" src="${url}" alt="${card.tags}" loading="lazy" />
+      <a href="${card.largeImageURL}">
+      <img width="350" height="233" src="${url}" alt="${card.tags}" loading="lazy" />
+      </a>
         <div class="info">
           <p class="info-item">
             <b>Likes:</b>  ${card.likes}
@@ -65,6 +70,15 @@ function renderImageCollection() {
       imageBox.insertAdjacentHTML('beforeend', image);
       pageInput.value = '';
     });
+
+    if (!lightbox) {
+      lightbox = new SimpleLightbox('.gallery a', {
+        captionsData: 'Alt',
+        captionDelay: '250'
+
+      });
+
+    }
   });
 }
 
@@ -89,7 +103,9 @@ function renderNextPage() {
     data.hits.map(card => {
       const url = card.webformatURL;
       const image = `<div class="photo-card">
-        <img width="350" height="233" src="${url}" alt="${card.tags}" loading="lazy" />
+        <a href="${card.largeImageURL}">
+          <img width="350" height="233" src="${url}" alt="${card.tags}" loading="lazy" />
+        </a>
         <div class="info">
           <p class="info-item">
             <b>Likes:</b>  ${card.likes}
@@ -106,7 +122,21 @@ function renderNextPage() {
         </div>
       </div>`;
       imageBox.insertAdjacentHTML('beforeend', image);
+      
       pageInput.value = '';
     });
+    lightbox.refresh();
   });
+}
+
+imageBox.addEventListener('click', openImage);
+
+
+
+
+
+function openImage(event) {
+  event.preventDefault();
+  if(event.target.tagName !== 'IMG') return;
+  imageBox.removeEventListener('click', openImage);
 }
