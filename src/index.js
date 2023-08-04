@@ -49,6 +49,7 @@ function renderImageCollection() {
           fontSize: '18px'
         });
     if (data.hits.length === 40) btnShowMore.classList.remove('is-hidden');
+
     data.hits.map(card => {
       const url = card.webformatURL;
       const image = `<div class="photo-card">
@@ -100,8 +101,19 @@ function renderNextPage() {
     const data = response.data;
     const pageQuantity = Math.ceil(data.totalHits / 40);
     if (data.hits.length < 40 || pageNumber === pageQuantity) btnShowMore.classList.add('is-hidden');
+    
+
+    Notify.success(`Сторінка:${pageNumber}, всьго:${pageQuantity}`,
+        {
+          timeout: 5000,
+          position: "center-center",
+          width: '400px',
+          fontSize: '18px'
+        });
+
     data.hits.map(card => {
       const url = card.webformatURL;
+
       const image = `<div class="photo-card">
         <a href="${card.largeImageURL}">
           <img width="350" height="233" src="${url}" alt="${card.tags}" loading="lazy" />
