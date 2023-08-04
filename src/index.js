@@ -13,10 +13,11 @@ const pageform = document.querySelector('.search-form');
 const pageInput = document.querySelector('input');
 const btnShowMore = document.querySelector('.show-more');
 
+
 btnShowMore.addEventListener('click', renderNextPage);
 imageBox.addEventListener('click', openImage);
 pageInput.addEventListener('input', (event) => {
-  enterValue = event.target.value;
+  enterValue = (event.target.value).trim();
 });
 
 async function getImageCollection() {
@@ -28,6 +29,7 @@ function renderImageCollection() {
     const data = response.data;
     
     if (data.total === 0 || !enterValue) {
+      btnShowMore.classList.add('is-hidden')
       Notify.warning('По вашому запиту нічого не знайдено!',
         {
           timeout: 3000,
@@ -96,8 +98,8 @@ function renderNextPage() {
   
   getImageCollection().then(response => {
     const data = response.data;
-    
-    if (data.hits.length < 40) btnShowMore.classList.add('is-hidden');
+    const pageQuantity = Math.ceil(data.totalHits / 40);
+    if (data.hits.length < 40 || pageNumber === pageQuantity) btnShowMore.classList.add('is-hidden');
     data.hits.map(card => {
       const url = card.webformatURL;
       const image = `<div class="photo-card">
